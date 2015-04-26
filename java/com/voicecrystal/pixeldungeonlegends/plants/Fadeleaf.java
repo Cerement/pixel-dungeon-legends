@@ -19,6 +19,8 @@ package com.voicecrystal.pixeldungeonlegends.plants;
 
 import com.voicecrystal.pixeldungeonlegends.Dungeon;
 import com.voicecrystal.pixeldungeonlegends.actors.Char;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Buff;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Invisibility;
 import com.voicecrystal.pixeldungeonlegends.actors.hero.Hero;
 import com.voicecrystal.pixeldungeonlegends.actors.mobs.Mob;
 import com.voicecrystal.pixeldungeonlegends.effects.CellEmitter;
@@ -26,6 +28,7 @@ import com.voicecrystal.pixeldungeonlegends.effects.Speck;
 import com.voicecrystal.pixeldungeonlegends.items.potions.PotionOfMindVision;
 import com.voicecrystal.pixeldungeonlegends.items.scrolls.ScrollOfTeleportation;
 import com.voicecrystal.pixeldungeonlegends.sprites.ItemSpriteSheet;
+import com.voicecrystal.pixeldungeonlegends.utils.GLog;
 
 public class Fadeleaf extends Plant {
 
@@ -79,6 +82,9 @@ public class Fadeleaf extends Plant {
 	}
 	
 	public static class Seed extends Plant.Seed {
+
+        public static final String AC_EAT	= "EAT";
+
 		{
 			plantName = "Fadeleaf";
 			
@@ -88,6 +94,24 @@ public class Fadeleaf extends Plant {
 			plantClass = Fadeleaf.class;
 			alchemyClass = PotionOfMindVision.class;
 		}
+
+        @Override
+        public void execute(Hero hero, String action)
+        {
+            if(action.equals( AC_EAT )) {
+
+                super.execute(hero, action);
+
+                GLog.p("You can't see yourself!");
+                Buff.prolong(hero, Invisibility.class, 5f);
+                hero.sprite.emitter().start( Speck.factory( Speck.LIGHT ), 0.2f, 3 );
+            }
+
+            else
+            {
+                super.execute(hero, action);
+            }
+        }
 		
 		@Override
 		public String desc() {

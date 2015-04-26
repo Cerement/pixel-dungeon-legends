@@ -33,6 +33,13 @@ import com.voicecrystal.pixeldungeonlegends.items.weapon.melee.Knuckles;
 import com.voicecrystal.pixeldungeonlegends.items.weapon.melee.ShortSword;
 import com.voicecrystal.pixeldungeonlegends.items.weapon.missiles.Dart;
 import com.voicecrystal.pixeldungeonlegends.items.weapon.missiles.Boomerang;
+import com.voicecrystal.pixeldungeonlegends.plants.Dreamweed;
+import com.voicecrystal.pixeldungeonlegends.plants.Earthroot;
+import com.voicecrystal.pixeldungeonlegends.plants.Fadeleaf;
+import com.voicecrystal.pixeldungeonlegends.plants.Firebloom;
+import com.voicecrystal.pixeldungeonlegends.plants.Icecap;
+import com.voicecrystal.pixeldungeonlegends.plants.Sorrowmoss;
+import com.voicecrystal.pixeldungeonlegends.plants.Sungrass;
 import com.voicecrystal.pixeldungeonlegends.ui.QuickSlot;
 import com.watabou.utils.Bundle;
 
@@ -114,6 +121,17 @@ public enum HeroClass {
 		(hero.belongings.armor = new ClothArmor()).identify();
 		new Food().identify().collect();
 		new Keyring().collect();
+
+        // for testing
+        for(int i = 0; i < 20; i++) {
+            new Dreamweed.Seed().collect();
+            new Earthroot.Seed().collect();
+            new Fadeleaf.Seed().collect();
+            new Firebloom.Seed().collect();
+            new Icecap.Seed().collect();
+            new Sorrowmoss.Seed().collect();
+            new Sungrass.Seed().collect();
+        }
 	}
 	
 	public Badges.Badge masteryBadge() {

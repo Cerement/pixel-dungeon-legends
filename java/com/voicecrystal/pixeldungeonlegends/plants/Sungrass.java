@@ -19,13 +19,21 @@ package com.voicecrystal.pixeldungeonlegends.plants;
 
 import com.voicecrystal.pixeldungeonlegends.Dungeon;
 import com.voicecrystal.pixeldungeonlegends.actors.Char;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Bleeding;
 import com.voicecrystal.pixeldungeonlegends.actors.buffs.Buff;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Cripple;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Light;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Poison;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Weakness;
+import com.voicecrystal.pixeldungeonlegends.actors.hero.Hero;
 import com.voicecrystal.pixeldungeonlegends.effects.CellEmitter;
+import com.voicecrystal.pixeldungeonlegends.effects.Flare;
 import com.voicecrystal.pixeldungeonlegends.effects.Speck;
 import com.voicecrystal.pixeldungeonlegends.effects.particles.ShaftParticle;
 import com.voicecrystal.pixeldungeonlegends.items.potions.PotionOfHealing;
 import com.voicecrystal.pixeldungeonlegends.sprites.ItemSpriteSheet;
 import com.voicecrystal.pixeldungeonlegends.ui.BuffIndicator;
+import com.voicecrystal.pixeldungeonlegends.utils.GLog;
 import com.watabou.utils.Bundle;
 
 public class Sungrass extends Plant {
@@ -56,7 +64,10 @@ public class Sungrass extends Plant {
 	}
 	
 	public static class Seed extends Plant.Seed {
-		{
+
+        public static final String AC_EAT	= "EAT";
+
+        {
 			plantName = "Sungrass";
 			
 			name = "seed of " + plantName;
@@ -65,6 +76,30 @@ public class Sungrass extends Plant {
 			plantClass = Sungrass.class;
 			alchemyClass = PotionOfHealing.class;
 		}
+
+        @Override
+        public void execute(Hero hero, String action)
+        {
+            if(action.equals( AC_EAT )) {
+
+                super.execute(hero, action);
+
+                GLog.p("Nutrients make you healthy.");
+                Buff.detach( hero, Poison.class );
+                Buff.detach( hero, Cripple.class );
+                Buff.detach( hero, Weakness.class );
+                Buff.detach(hero, Bleeding.class);
+                new Flare( 6, 32 ).show( hero.sprite, 2f ) ;
+
+                GLog.p("You glow in the darkness.");
+                Buff.affect(hero, Light.class, 50f);
+            }
+
+            else
+            {
+                super.execute(hero, action);
+            }
+        }
 		
 		@Override
 		public String desc() {

@@ -19,6 +19,13 @@ package com.voicecrystal.pixeldungeonlegends.plants;
 
 import java.util.ArrayList;
 
+import com.voicecrystal.pixeldungeonlegends.Badges;
+import com.voicecrystal.pixeldungeonlegends.Statistics;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Hunger;
+import com.voicecrystal.pixeldungeonlegends.effects.Speck;
+import com.voicecrystal.pixeldungeonlegends.effects.SpellSprite;
+import com.voicecrystal.pixeldungeonlegends.items.scrolls.ScrollOfRecharging;
+import com.voicecrystal.pixeldungeonlegends.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.voicecrystal.pixeldungeonlegends.Assets;
 import com.voicecrystal.pixeldungeonlegends.Dungeon;
@@ -95,6 +102,12 @@ public class Plant implements Bundlable {
 	public static class Seed extends Item {
 		
 		public static final String AC_PLANT	= "PLANT";
+        public static final String AC_EAT	= "EAT";
+
+        private static final float TIME_TO_EAT	= 1f;
+
+        public float energy = Hunger.HUNGRY * 0.25f;
+        public String message = "Eh, it tested like grass.";
 		
 		private static final String TXT_INFO = "Throw this seed to the place where you want to grow %s.\n\n%s";
 		
@@ -114,6 +127,7 @@ public class Plant implements Bundlable {
 		public ArrayList<String> actions( Hero hero ) {
 			ArrayList<String> actions = super.actions( hero );
 			actions.add( AC_PLANT );
+            actions.add( AC_EAT );
 			return actions;
 		}
 		
@@ -136,7 +150,37 @@ public class Plant implements Bundlable {
 				
 				hero.sprite.operate( hero.pos );
 				
-			} else {
+			}
+            else if(action.equals( AC_EAT )) {
+                detach( hero.belongings.backpack );
+
+                ((Hunger)hero.buff( Hunger.class )).satisfy( energy );
+
+                switch (hero.heroClass) {
+                    case WARRIOR:
+                        if (hero.HP < hero.HT) {
+                            hero.HP = Math.min( hero.HP + 2, hero.HT );
+                            hero.sprite.emitter().burst( Speck.factory(Speck.HEALING), 1 );
+                        }
+                        break;
+                    case MAGE:
+                        break;
+                    case ROGUE:
+                    case HUNTRESS:
+                        break;
+                }
+
+                hero.sprite.operate( hero.pos );
+                hero.busy();
+                SpellSprite.show(hero, SpellSprite.FOOD);
+                Sample.INSTANCE.play( Assets.SND_EAT );
+
+                hero.spend( TIME_TO_EAT );
+
+                Statistics.foodEaten++;
+                Badges.validateFoodEaten();
+            }
+            else {
 				
 				super.execute (hero, action );
 				

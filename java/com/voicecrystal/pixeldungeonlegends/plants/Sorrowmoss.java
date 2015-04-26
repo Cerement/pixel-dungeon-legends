@@ -20,11 +20,15 @@ package com.voicecrystal.pixeldungeonlegends.plants;
 import com.voicecrystal.pixeldungeonlegends.Dungeon;
 import com.voicecrystal.pixeldungeonlegends.actors.Char;
 import com.voicecrystal.pixeldungeonlegends.actors.buffs.Buff;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.MindVision;
 import com.voicecrystal.pixeldungeonlegends.actors.buffs.Poison;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Weakness;
+import com.voicecrystal.pixeldungeonlegends.actors.hero.Hero;
 import com.voicecrystal.pixeldungeonlegends.effects.CellEmitter;
 import com.voicecrystal.pixeldungeonlegends.effects.particles.PoisonParticle;
 import com.voicecrystal.pixeldungeonlegends.items.potions.PotionOfToxicGas;
 import com.voicecrystal.pixeldungeonlegends.sprites.ItemSpriteSheet;
+import com.voicecrystal.pixeldungeonlegends.utils.GLog;
 
 public class Sorrowmoss extends Plant {
 
@@ -55,7 +59,10 @@ public class Sorrowmoss extends Plant {
 	}
 	
 	public static class Seed extends Plant.Seed {
-		{
+
+        public static final String AC_EAT	= "EAT";
+
+        {
 			plantName = "Sorrowmoss";
 			
 			name = "seed of " + plantName;
@@ -64,6 +71,26 @@ public class Sorrowmoss extends Plant {
 			plantClass = Sorrowmoss.class;
 			alchemyClass = PotionOfToxicGas.class;
 		}
+
+        @Override
+        public void execute(Hero hero, String action)
+        {
+            if(action.equals( AC_EAT )) {
+
+                super.execute(hero, action);
+
+                GLog.n("Now you can take a peek at the monsters' mind...");
+                Buff.prolong(hero, MindVision.class, 5f);
+
+                GLog.w("So much feelings...");
+                Buff.prolong(hero, Weakness.class, 5f);
+            }
+
+            else
+            {
+                super.execute(hero, action);
+            }
+        }
 		
 		@Override
 		public String desc() {

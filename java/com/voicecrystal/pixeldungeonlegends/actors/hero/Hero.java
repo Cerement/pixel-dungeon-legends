@@ -163,8 +163,11 @@ public class Hero extends Char {
 	
 	public int lvl = 1;
 	public int exp = 0;
+
+    // focus: next attack will be more powerful
+    public float focusFactor = 0;
 	
-	private ArrayList<Mob> visibleEnemies; 
+	private ArrayList<Mob> visibleEnemies;
 	
 	public Hero() {
 		super();
@@ -175,7 +178,6 @@ public class Hero extends Char {
 		awareness = 0.1f;
 		
 		belongings = new Belongings( this );
-		
 		visibleEnemies = new ArrayList<Mob>();
 	}
 
@@ -804,6 +806,15 @@ public class Hero extends Char {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
+
+        // focus
+        if(focusFactor > 0)
+        {
+            GLog.p("%dx Damage!", (int)focusFactor);
+            damage *= focusFactor;
+            setFocus(0f); // off
+        }
+
 		if (wep != null) {
 			
 			wep.proc( this, enemy, damage );
@@ -874,6 +885,12 @@ public class Hero extends Char {
 			Buff.affect( this, Fury.class );
 		}
 	}
+
+    // the next attack will be more powerful
+    public void setFocus(float factor)
+    {
+        focusFactor = factor;
+    }
 	
 	private void checkVisibleMobs() {
 		ArrayList<Mob> visible = new ArrayList<Mob>();

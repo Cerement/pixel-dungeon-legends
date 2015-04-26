@@ -21,10 +21,14 @@ import com.voicecrystal.pixeldungeonlegends.Dungeon;
 import com.voicecrystal.pixeldungeonlegends.actors.Char;
 import com.voicecrystal.pixeldungeonlegends.actors.blobs.Fire;
 import com.voicecrystal.pixeldungeonlegends.actors.blobs.Freezing;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Buff;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.GasesImmunity;
+import com.voicecrystal.pixeldungeonlegends.actors.hero.Hero;
 import com.voicecrystal.pixeldungeonlegends.items.potions.PotionOfFrost;
 import com.voicecrystal.pixeldungeonlegends.levels.Level;
 import com.voicecrystal.pixeldungeonlegends.sprites.ItemSpriteSheet;
 import com.voicecrystal.pixeldungeonlegends.utils.BArray;
+import com.voicecrystal.pixeldungeonlegends.utils.GLog;
 import com.watabou.utils.PathFinder;
 
 public class Icecap extends Plant {
@@ -57,6 +61,9 @@ public class Icecap extends Plant {
 	}
 	
 	public static class Seed extends Plant.Seed {
+
+        public static final String AC_EAT	= "EAT";
+
 		{
 			plantName = "Icecap";
 			
@@ -66,6 +73,23 @@ public class Icecap extends Plant {
 			plantClass = Icecap.class;
 			alchemyClass = PotionOfFrost.class;
 		}
+
+        @Override
+        public void execute(Hero hero, String action)
+        {
+            if(action.equals( AC_EAT )) {
+
+                super.execute(hero, action);
+
+                GLog.p("A cold fresh air run through your nose.");
+                Buff.prolong(hero, GasesImmunity.class, 3f);
+            }
+
+            else
+            {
+                super.execute(hero, action);
+            }
+        }
 		
 		@Override
 		public String desc() {

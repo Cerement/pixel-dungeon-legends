@@ -17,8 +17,14 @@
  */
 package com.voicecrystal.pixeldungeonlegends.actors.buffs;
 
+import com.voicecrystal.pixeldungeonlegends.ui.BuffIndicator;
+
 public class Speed extends FlavourBuff {
-	
+
 	public static final float DURATION = 10f;
-	
+
+    @Override
+    public int icon() {
+        return BuffIndicator.LEVITATION;
+    }
 }

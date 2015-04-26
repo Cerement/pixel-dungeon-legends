@@ -17,6 +17,11 @@
  */
 package com.voicecrystal.pixeldungeonlegends.plants;
 
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Hunger;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Paralysis;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Roots;
+import com.voicecrystal.pixeldungeonlegends.actors.hero.Hero;
+import com.voicecrystal.pixeldungeonlegends.utils.GLog;
 import com.watabou.noosa.Camera;
 import com.voicecrystal.pixeldungeonlegends.Dungeon;
 import com.voicecrystal.pixeldungeonlegends.actors.Char;
@@ -59,6 +64,9 @@ public class Earthroot extends Plant {
 	}
 	
 	public static class Seed extends Plant.Seed {
+
+        public static final String AC_EAT	= "EAT";
+
 		{
 			plantName = "Earthroot";
 			
@@ -68,6 +76,26 @@ public class Earthroot extends Plant {
 			plantClass = Earthroot.class;
 			alchemyClass = PotionOfParalyticGas.class;
 		}
+
+        @Override
+        public void execute(Hero hero, String action)
+        {
+            if(action.equals( AC_EAT )) {
+
+                super.execute(hero, action);
+
+                GLog.p("Eh, not so bad.");
+                ((Hunger)hero.buff( Hunger.class )).satisfy( energy );
+
+                GLog.w("You can't feel anything...");
+                Buff.prolong(hero, Paralysis.class, 5f);
+            }
+
+            else
+            {
+                super.execute(hero, action);
+            }
+        }
 		
 		@Override
 		public String desc() {

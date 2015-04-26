@@ -18,14 +18,21 @@
 package com.voicecrystal.pixeldungeonlegends.plants;
 
 import com.voicecrystal.pixeldungeonlegends.Dungeon;
+import com.voicecrystal.pixeldungeonlegends.ResultDescriptions;
 import com.voicecrystal.pixeldungeonlegends.actors.Char;
 import com.voicecrystal.pixeldungeonlegends.actors.blobs.Blob;
 import com.voicecrystal.pixeldungeonlegends.actors.blobs.Fire;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Buff;
+import com.voicecrystal.pixeldungeonlegends.actors.buffs.Combo;
+import com.voicecrystal.pixeldungeonlegends.actors.hero.Hero;
 import com.voicecrystal.pixeldungeonlegends.effects.CellEmitter;
+import com.voicecrystal.pixeldungeonlegends.effects.particles.EnergyParticle;
 import com.voicecrystal.pixeldungeonlegends.effects.particles.FlameParticle;
 import com.voicecrystal.pixeldungeonlegends.items.potions.PotionOfLiquidFlame;
 import com.voicecrystal.pixeldungeonlegends.scenes.GameScene;
 import com.voicecrystal.pixeldungeonlegends.sprites.ItemSpriteSheet;
+import com.voicecrystal.pixeldungeonlegends.utils.GLog;
+import com.voicecrystal.pixeldungeonlegends.utils.Utils;
 
 public class Firebloom extends Plant {
 
@@ -52,7 +59,10 @@ public class Firebloom extends Plant {
 		return TXT_DESC;
 	}
 	
-	public static class Seed extends Plant.Seed {
+	public static class Seed extends Plant.Seed implements Hero.Doom {
+
+        public static final String AC_EAT	= "EAT";
+
 		{
 			plantName = "Firebloom";
 			
@@ -62,10 +72,37 @@ public class Firebloom extends Plant {
 			plantClass = Firebloom.class;
 			alchemyClass = PotionOfLiquidFlame.class;
 		}
+
+        @Override
+        public void execute(Hero hero, String action)
+        {
+            if(action.equals( AC_EAT )) {
+
+                super.execute(hero, action);
+
+                GLog.n("Something is burning inside. You feel painful.");
+                hero.damage((int)(hero.HT * 0.2), this);
+
+                GLog.p("An overwhelming power charged on your arms.");
+                hero.focusFactor += 2f;
+                hero.sprite.centerEmitter().burst( EnergyParticle.FACTORY, 15 );
+            }
+
+            else
+            {
+                super.execute(hero, action);
+            }
+        }
 		
 		@Override
 		public String desc() {
 			return TXT_DESC;
 		}
+
+        @Override
+        public void onDeath() {
+            Dungeon.fail( Utils.format(ResultDescriptions.FIREBLOOM, Dungeon.depth) );
+            GLog.n( "You are devoured by the inner flame..." );
+        }
 	}
 }
