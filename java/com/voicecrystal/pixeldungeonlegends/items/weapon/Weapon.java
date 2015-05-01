@@ -70,7 +70,7 @@ public class Weapon extends KindOfWeapon {
 			}
 		}
 		
-		use();
+		//use();
 	}
 	
 	private static final String UNFAMILIRIARITY	= "unfamiliarity";
@@ -160,10 +160,10 @@ public class Weapon extends KindOfWeapon {
 		return super.upgrade();
 	}
 	
-	@Override
-	public int maxDurability( int lvl ) {
-		return 4 * (lvl < 16 ? 16 - lvl : 1);
-	}
+//	@Override
+//	public int maxDurability( int lvl ) {
+//		return 4 * (lvl < 16 ? 16 - lvl : 1);
+//	}
 	
 	@Override
 	public String toString() {
@@ -224,8 +224,7 @@ public class Weapon extends KindOfWeapon {
 		
 		private static final Class<?>[] enchants = new Class<?>[]{ 
 			Fire.class, Poison.class, Death.class, Paralysis.class, Leech.class, 
-			Slow.class, Shock.class, Instability.class, Horror.class, Luck.class,
-			Tempering.class};
+			Slow.class, Shock.class, Instability.class, Horror.class, Luck.class,};
 		private static final float[] chances= new float[]{ 10, 10, 1, 2, 1, 2, 6, 3, 2, 2, 3 };
 			
 		public abstract boolean proc( Weapon weapon, Char attacker, Char defender, int damage );

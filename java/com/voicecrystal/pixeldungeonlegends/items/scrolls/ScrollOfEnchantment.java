@@ -50,7 +50,7 @@ public class ScrollOfEnchantment extends InventoryScroll {
 		
 		}
 		
-		item.fix();
+		//item.fix();
 		
 		curUser.sprite.emitter().start( Speck.factory( Speck.LIGHT ), 0.1f, 5 );
 		GLog.w( TXT_GLOWS, item.name() );

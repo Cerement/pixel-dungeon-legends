@@ -17,11 +17,6 @@
  */
 package com.voicecrystal.pixeldungeonlegends.items;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
-import com.watabou.noosa.audio.Sample;
 import com.voicecrystal.pixeldungeonlegends.Assets;
 import com.voicecrystal.pixeldungeonlegends.Badges;
 import com.voicecrystal.pixeldungeonlegends.Dungeon;
@@ -29,41 +24,39 @@ import com.voicecrystal.pixeldungeonlegends.actors.Actor;
 import com.voicecrystal.pixeldungeonlegends.actors.Char;
 import com.voicecrystal.pixeldungeonlegends.actors.buffs.SnipersMark;
 import com.voicecrystal.pixeldungeonlegends.actors.hero.Hero;
-import com.voicecrystal.pixeldungeonlegends.effects.Degradation;
 import com.voicecrystal.pixeldungeonlegends.effects.Speck;
-import com.voicecrystal.pixeldungeonlegends.items.armor.Armor;
 import com.voicecrystal.pixeldungeonlegends.items.bags.Bag;
-import com.voicecrystal.pixeldungeonlegends.items.rings.Ring;
-import com.voicecrystal.pixeldungeonlegends.items.wands.Wand;
-import com.voicecrystal.pixeldungeonlegends.items.weapon.Weapon;
 import com.voicecrystal.pixeldungeonlegends.items.weapon.missiles.MissileWeapon;
 import com.voicecrystal.pixeldungeonlegends.mechanics.Ballistica;
 import com.voicecrystal.pixeldungeonlegends.scenes.CellSelector;
 import com.voicecrystal.pixeldungeonlegends.scenes.GameScene;
-import com.voicecrystal.pixeldungeonlegends.sprites.CharSprite;
 import com.voicecrystal.pixeldungeonlegends.sprites.ItemSprite;
 import com.voicecrystal.pixeldungeonlegends.sprites.MissileSprite;
 import com.voicecrystal.pixeldungeonlegends.ui.QuickSlot;
 import com.voicecrystal.pixeldungeonlegends.utils.GLog;
 import com.voicecrystal.pixeldungeonlegends.utils.Utils;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.PointF;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Item implements Bundlable {
 
 	private static final String TXT_PACK_FULL	= "Your pack is too full for the %s";
 	
-	private static final String TXT_DEGRADED		= "Because of frequent use, your %s has degraded.";
-	private static final String TXT_GONNA_DEGRADE	= "Because of frequent use, your %s is going to degrade soon.";
+	//private static final String TXT_DEGRADED		= "Because of frequent use, your %s has degraded.";
+	//private static final String TXT_GONNA_DEGRADE	= "Because of frequent use, your %s is going to degrade soon.";
 	
 	private static final String TXT_TO_STRING		= "%s";
 	private static final String TXT_TO_STRING_X		= "%s x%d";
 	private static final String TXT_TO_STRING_LVL	= "%s%+d";
 	private static final String TXT_TO_STRING_LVL_X	= "%s%+d x%d";
 	
-	private static final float DURABILITY_WARNING_LEVEL	= 1/6f;
+	//private static final float DURABILITY_WARNING_LEVEL	= 1/6f;
 	
 	protected static final float TIME_TO_THROW		= 1.0f;
 	protected static final float TIME_TO_PICK_UP	= 1.0f;
@@ -83,7 +76,7 @@ public class Item implements Bundlable {
 	
 	public int level = 0;
 	public boolean levelKnown = false;
-	private int durability = maxDurability();
+	//private int durability = maxDurability();
 	
 	public boolean cursed;
 	public boolean cursedKnown;
@@ -256,7 +249,7 @@ public class Item implements Bundlable {
 		cursedKnown = true;
 		
 		level++;
-		fix();
+		//fix();
 		
 		return this;
 	}
@@ -270,10 +263,10 @@ public class Item implements Bundlable {
 	}
 	
 	public Item degrade() {
-		
-		this.level--;	
-		fix();
-		
+
+		this.level--;
+		//fix();
+
 		return this;
 	}
 	
@@ -281,60 +274,60 @@ public class Item implements Bundlable {
 		for (int i=0; i < n; i++) {
 			degrade();
 		}
-		
+
 		return this;
 	}
 	
-	public void use() {
-		if (level > 0) {
-			int threshold = (int)(maxDurability() * DURABILITY_WARNING_LEVEL);
-			if (durability-- >= threshold && threshold > durability) {
-				GLog.w( TXT_GONNA_DEGRADE, name() );
-			}
-			if (durability <= 0) {
-				degrade();
-				if (levelKnown) {
-					GLog.n( TXT_DEGRADED, name() );
-					Dungeon.hero.interrupt();
-					
-					CharSprite sprite = Dungeon.hero.sprite;
-					PointF point = sprite.center().offset( 0, -16 );
-					if (this instanceof Weapon) {
-						sprite.parent.add( Degradation.weapon( point ) );
-					} else if (this instanceof Armor) {
-						sprite.parent.add( Degradation.armor( point ) );
-					} else if (this instanceof Ring) {
-						sprite.parent.add( Degradation.ring( point ) );
-					} else if (this instanceof Wand) {
-						sprite.parent.add( Degradation.wand( point ) );
-					}
-					Sample.INSTANCE.play( Assets.SND_DEGRADE );
-				}
-			}
-		}
-	}
+//	public void use() {
+//		if (level > 0) {
+//			int threshold = (int)(maxDurability() * DURABILITY_WARNING_LEVEL);
+//			if (durability-- >= threshold && threshold > durability) {
+//				GLog.w( TXT_GONNA_DEGRADE, name() );
+//			}
+//			if (durability <= 0) {
+//				degrade();
+//				if (levelKnown) {
+//					GLog.n( TXT_DEGRADED, name() );
+//					Dungeon.hero.interrupt();
+//
+//					CharSprite sprite = Dungeon.hero.sprite;
+//					PointF point = sprite.center().offset( 0, -16 );
+//					if (this instanceof Weapon) {
+//						sprite.parent.add( Degradation.weapon( point ) );
+//					} else if (this instanceof Armor) {
+//						sprite.parent.add( Degradation.armor( point ) );
+//					} else if (this instanceof Ring) {
+//						sprite.parent.add( Degradation.ring( point ) );
+//					} else if (this instanceof Wand) {
+//						sprite.parent.add( Degradation.wand( point ) );
+//					}
+//					Sample.INSTANCE.play( Assets.SND_DEGRADE );
+//				}
+//			}
+//		}
+//	}
 	
-	public void fix() {
-		durability = maxDurability();
-	}
+//	public void fix() {
+//		durability = maxDurability();
+//	}
 	
-	public void polish() {
-		if (durability < maxDurability()) {
-			durability++;
-		}
-	}
+//	public void polish() {
+//		if (durability < maxDurability()) {
+//			durability++;
+//		}
+//	}
 	
-	public int durability() {
-		return durability;
-	}
+//	public int durability() {
+//		return durability;
+//	}
 	
-	public int maxDurability( int lvl ) {
-		return 1;
-	}
+//	public int maxDurability( int lvl ) {
+//		return 1;
+//	}
 	
-	final public int maxDurability() {
-		return maxDurability( level );
-	}
+//	final public int maxDurability() {
+//		return maxDurability( level );
+//	}
 	
 	public int visiblyUpgraded() {
 		return levelKnown ? level : 0;
@@ -459,7 +452,7 @@ public class Item implements Bundlable {
 	private static final String LEVEL_KNOWN		= "levelKnown";
 	private static final String CURSED			= "cursed";
 	private static final String CURSED_KNOWN	= "cursedKnown";
-	private static final String DURABILITY		= "durability";
+	//private static final String DURABILITY		= "durability";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -468,9 +461,9 @@ public class Item implements Bundlable {
 		bundle.put( LEVEL_KNOWN, levelKnown );
 		bundle.put( CURSED, cursed );
 		bundle.put( CURSED_KNOWN, cursedKnown );
-		if (isUpgradable()) {
-			bundle.put( DURABILITY, durability );
-		}
+//		if (isUpgradable()) {
+//			bundle.put( DURABILITY, durability );
+//		}
 		QuickSlot.save( bundle, this );
 	}
 	
@@ -483,18 +476,19 @@ public class Item implements Bundlable {
 		int level = bundle.getInt( LEVEL );
 		if (level > 0) {
 			upgrade( level );
-		} else if (level < 0) {
+		}
+        else if (level < 0) {
 			degrade( -level );
 		}
 		
 		cursed	= bundle.getBoolean( CURSED );
 		
-		if (isUpgradable()) {
-			durability = bundle.getInt( DURABILITY );
-		}
-		if (durability <= 0) {
-			durability = maxDurability( level );
-		}
+//		if (isUpgradable()) {
+//			durability = bundle.getInt( DURABILITY );
+//		}
+//		if (durability <= 0) {
+//			durability = maxDurability( level );
+//		}
 		
 		QuickSlot.restore( bundle, this );
 	}

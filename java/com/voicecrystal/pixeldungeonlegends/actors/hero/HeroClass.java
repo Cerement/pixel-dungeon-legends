@@ -27,6 +27,7 @@ import com.voicecrystal.pixeldungeonlegends.items.potions.PotionOfStrength;
 import com.voicecrystal.pixeldungeonlegends.items.rings.RingOfShadows;
 import com.voicecrystal.pixeldungeonlegends.items.scrolls.ScrollOfIdentify;
 import com.voicecrystal.pixeldungeonlegends.items.scrolls.ScrollOfMagicMapping;
+import com.voicecrystal.pixeldungeonlegends.items.scrolls.ScrollOfUpgrade;
 import com.voicecrystal.pixeldungeonlegends.items.wands.WandOfMagicMissile;
 import com.voicecrystal.pixeldungeonlegends.items.weapon.melee.Dagger;
 import com.voicecrystal.pixeldungeonlegends.items.weapon.melee.Knuckles;
@@ -121,17 +122,6 @@ public enum HeroClass {
 		(hero.belongings.armor = new ClothArmor()).identify();
 		new Food().identify().collect();
 		new Keyring().collect();
-
-        // for testing
-        for(int i = 0; i < 20; i++) {
-            new Dreamweed.Seed().collect();
-            new Earthroot.Seed().collect();
-            new Fadeleaf.Seed().collect();
-            new Firebloom.Seed().collect();
-            new Icecap.Seed().collect();
-            new Sorrowmoss.Seed().collect();
-            new Sungrass.Seed().collect();
-        }
 	}
 	
 	public Badges.Badge masteryBadge() {

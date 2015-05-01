@@ -239,14 +239,14 @@ public class Ring extends EquipableItem {
 		return this;
 	}
 	
-	@Override
-	public int maxDurability( int lvl ) {
-		if (lvl <= 1) {
-			return Integer.MAX_VALUE;
-		} else {
-			return 80 * (lvl < 16 ? 16 - lvl : 1);
-		}
-	}
+//	@Override
+//	public int maxDurability( int lvl ) {
+//		if (lvl <= 1) {
+//			return Integer.MAX_VALUE;
+//		} else {
+//			return 80 * (lvl < 16 ? 16 - lvl : 1);
+//		}
+//	}
 	
 	public boolean isKnown() {
 		return handler.isKnown( this );
@@ -387,7 +387,7 @@ public class Ring extends EquipableItem {
 				Badges.validateItemLevelAquired( Ring.this );
 			}
 			
-			use();
+			//use();
 			
 			spend( TICK );
 			

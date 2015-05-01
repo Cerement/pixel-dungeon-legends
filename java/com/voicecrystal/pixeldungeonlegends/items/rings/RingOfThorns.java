@@ -51,10 +51,10 @@ public class RingOfThorns extends Ring {
 		return false;
 	}
 	
-	@Override
-	public void use() {
-		// Do nothing (it can't degrade)
-	}
+//	@Override
+//	public void use() {
+//		// Do nothing (it can't degrade)
+//	}
 	
 	@Override
 	public String desc() {

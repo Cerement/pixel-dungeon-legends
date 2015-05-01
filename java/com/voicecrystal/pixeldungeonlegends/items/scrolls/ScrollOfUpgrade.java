@@ -24,10 +24,12 @@ import com.voicecrystal.pixeldungeonlegends.effects.Speck;
 import com.voicecrystal.pixeldungeonlegends.items.Item;
 import com.voicecrystal.pixeldungeonlegends.utils.GLog;
 import com.voicecrystal.pixeldungeonlegends.windows.WndBag;
+import com.watabou.utils.Random;
 
 public class ScrollOfUpgrade extends InventoryScroll {
 
-	private static final String TXT_LOOKS_BETTER	= "your %s certainly looks better now";
+	private static final String TXT_LOOKS_BETTER	= "Your %s certainly looks better now.";
+    private static final String TXT_THE_SAME	= "Your %s looks the same, nothing changed.";
 	
 	{
 		name = "Scroll of Upgrade";
@@ -39,10 +41,18 @@ public class ScrollOfUpgrade extends InventoryScroll {
 	protected void onItemSelected( Item item ) {
 
 		ScrollOfRemoveCurse.uncurse( Dungeon.hero, item );
-		item.upgrade();
-		
-		upgrade( curUser );
-		GLog.p( TXT_LOOKS_BETTER, item.name() );
+
+        int level = Math.max(0, item.level);
+        if(Random.Int(level + 6 - 1) > level + 1 - 1) { // lvl+1 / lvl+6
+            // success
+            item.upgrade();
+            upgrade(curUser);
+            GLog.p(TXT_LOOKS_BETTER, item.name());
+        }
+        else {
+            // fail
+            GLog.i(TXT_THE_SAME, item.name());
+        }
 		
 		Badges.validateItemLevelAquired( item );
 	}

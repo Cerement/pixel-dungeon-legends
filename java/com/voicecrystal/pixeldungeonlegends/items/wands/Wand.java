@@ -310,10 +310,10 @@ public abstract class Wand extends KindOfWeapon {
 		return this;
 	}
 	
-	@Override
-	public int maxDurability( int lvl ) {
-		return 5 * (lvl < 16 ? 16 - lvl : 1);
-	}
+//	@Override
+//	public int maxDurability( int lvl ) {
+//		return 5 * (lvl < 16 ? 16 - lvl : 1);
+//	}
 	
 	protected void updateLevel() {
 		maxCharges = Math.min( initialCharges() + level, 9 );
@@ -347,7 +347,7 @@ public abstract class Wand extends KindOfWeapon {
 			updateQuickslot();
 		}
 		
-		use();
+		//use();
 		
 		curUser.spendAndNext( TIME_TO_ZAP );
 	}

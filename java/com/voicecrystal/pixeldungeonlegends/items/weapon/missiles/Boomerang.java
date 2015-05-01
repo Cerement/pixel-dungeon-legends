@@ -66,10 +66,10 @@ public class Boomerang extends MissileWeapon {
 		return super.degrade();
 	}
 	
-	@Override
-	public int maxDurability( int lvl ) {
-		return 7 * (lvl < 16 ? 16 - lvl : 1);
-	}
+//	@Override
+//	public int maxDurability( int lvl ) {
+//		return 7 * (lvl < 16 ? 16 - lvl : 1);
+//	}
 	
 	@Override
 	public void proc( Char attacker, Char defender, int damage ) {
