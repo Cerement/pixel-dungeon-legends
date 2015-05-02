@@ -159,11 +159,13 @@ public class Plant implements Bundlable {
                 switch (hero.heroClass) {
                     case WARRIOR:
                         if (hero.HP < hero.HT) {
-                            hero.HP = Math.min( hero.HP + 2, hero.HT );
+                            hero.HP = Math.min( hero.HP + 5, hero.HT );
                             hero.sprite.emitter().burst( Speck.factory(Speck.HEALING), 1 );
                         }
                         break;
                     case MAGE:
+                        hero.belongings.charge( false );
+                        ScrollOfRecharging.charge( hero );
                         break;
                     case ROGUE:
                     case HUNTRESS:
