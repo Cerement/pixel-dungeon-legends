@@ -163,4 +163,6 @@ public class Assets {
 	public static final String SND_BEE		= "snd_bee.mp3";
 	public static final String SND_DEGRADE	= "snd_degrade.mp3";
 	public static final String SND_MIMIC	= "snd_mimic.mp3";
+
+	public static final String NAGA = "naga.png"; // about image
 }

@@ -50,7 +50,8 @@ public enum Icons {
 	EXIT,
 	CHALLENGE_OFF,
 	CHALLENGE_ON,
-	RESUME;
+	RESUME,
+	NAGA; // about image
 	
 	public Image get() {
 		return get( this );
@@ -79,6 +80,10 @@ public enum Icons {
 			break;
 		case WATA:
 			icon.frame( icon.texture.uvRect( 30, 16, 45, 26 ) );
+			break;
+		case NAGA: // about image
+			icon = new Image(Assets.NAGA);
+			icon.frame( icon.texture.uvRect( 0, 0, 14, 14 ) );
 			break;
 		case WARRIOR:
 			icon.frame( icon.texture.uvRect( 0, 29, 16, 45 ) );

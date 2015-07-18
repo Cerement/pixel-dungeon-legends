@@ -35,8 +35,16 @@ import com.voicecrystal.pixeldungeonlegends.ui.Window;
 
 public class AboutScene extends PixelScene {
 
+	private static final String TXT_NAGA =
+			"Modder: Naga Chiang\n\n" +
+			"This mod is based on Pixel Dungeon 1.7.5a. " +
+			"Really appreciate that Watabou open sourced this great work. " +
+			"Please, make sure to try out the original version!";
+
+	private static final String LNK_NAGA = "pixeldungeon.watabou.ru";
+
 	private static final String TXT = 
-		"Code & graphics: Watabou\n" +
+		"Code & Graphics: Watabou\n" +
 		"Music: Cube_Code\n\n" + 
 		"This game is inspired by Brian Walker's Brogue. " +
 		"Try it on Windows, Mac OS or Linux - it's awesome! ;)\n\n" +
@@ -47,14 +55,51 @@ public class AboutScene extends PixelScene {
 	@Override
 	public void create() {
 		super.create();
-		
+
+		// Mod about
+		BitmapTextMultiline textNaga = createMultiline( TXT_NAGA, 8 );
+		textNaga.maxWidth = Math.min( Camera.main.width, 120 );
+		textNaga.measure();
+		add( textNaga );
+
+		textNaga.x = align( (Camera.main.width - textNaga.width()) / 2 );
+		textNaga.y = align( (Camera.main.height - textNaga.height()) / 4 ) + 8;
+
+		BitmapTextMultiline titleNaga = createMultiline( "Pixel Dungeon: Legends", 8 );
+		titleNaga.maxWidth = Math.min( Camera.main.width, 120 );
+		titleNaga.measure();
+		titleNaga.hardlight(0xEA0000);
+		add(titleNaga);
+
+		titleNaga.x = align((Camera.main.width - titleNaga.width()) / 2);
+		titleNaga.y = align( textNaga.y - titleNaga.height() / 2) - 8;
+
+//		BitmapTextMultiline link = createMultiline( LNK, 8 );
+//		link.maxWidth = Math.min( Camera.main.width, 120 );
+//		link.measure();
+//		link.hardlight( Window.TITLE_COLOR );
+//		add( link );
+
+//		link.x = textNaga.x;
+//		link.y = textNaga.y + textNaga.height();
+
+		// Original about
 		BitmapTextMultiline text = createMultiline( TXT, 8 );
 		text.maxWidth = Math.min( Camera.main.width, 120 );
 		text.measure();
 		add( text );
 		
 		text.x = align( (Camera.main.width - text.width()) / 2 );
-		text.y = align( (Camera.main.height - text.height()) / 2 );
+		text.y = align( (Camera.main.height - text.height()) * (3.0f/4.0f) ) + 8;
+
+		BitmapTextMultiline title = createMultiline( "Pixel Dungeon", 8 );
+		title.maxWidth = Math.min( Camera.main.width, 120 );
+		title.measure();
+		title.hardlight(Window.TITLE_COLOR);
+		add(title);
+
+		title.x = align((Camera.main.width - title.width()) / 2);
+		title.y = align( text.y - title.height() / 2) - 8;
 		
 		BitmapTextMultiline link = createMultiline( LNK, 8 );
 		link.maxWidth = Math.min( Camera.main.width, 120 );
@@ -73,14 +118,24 @@ public class AboutScene extends PixelScene {
 			}
 		};
 		add( hotArea );
-		
+
+		// Mod image
+		Image imgNaga = Icons.NAGA.get();
+		imgNaga.x = align( (Camera.main.width - imgNaga.width) / 2 );
+		imgNaga.y = textNaga.y - imgNaga.height - 16;
+		add( imgNaga );
+
+		new Flare( 10, 64 ).color( 0x333333, true ).show( imgNaga, 0 ).angularSpeed = +40;
+
+		// Original image
 		Image wata = Icons.WATA.get();
 		wata.x = align( (Camera.main.width - wata.width) / 2 );
-		wata.y = text.y - wata.height - 8;
+		wata.y = text.y - wata.height - 16;
 		add( wata );
 		
 		new Flare( 7, 64 ).color( 0x112233, true ).show( wata, 0 ).angularSpeed = +20;
-		
+
+		// UI
 		Archs archs = new Archs();
 		archs.setSize( Camera.main.width, Camera.main.height );
 		addToBack( archs );
