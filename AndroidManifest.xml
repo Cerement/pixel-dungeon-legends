@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.voicecrystal.pixeldungeonlegends"
 	android:versionCode="1"
-	android:versionName="0.2"
+	android:versionName="0.2a"
 	android:installLocation="auto">
 
     <uses-permission android:name="android.permission.VIBRATE"/>

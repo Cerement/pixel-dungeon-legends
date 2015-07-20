@@ -68,7 +68,7 @@ public class AboutScene extends PixelScene {
 		BitmapTextMultiline titleNaga = createMultiline( "Pixel Dungeon: Legends", 8 );
 		titleNaga.maxWidth = Math.min( Camera.main.width, 120 );
 		titleNaga.measure();
-		titleNaga.hardlight(0xEA0000);
+		titleNaga.hardlight(Window.TITLE_COLOR);
 		add(titleNaga);
 
 		titleNaga.x = align((Camera.main.width - titleNaga.width()) / 2);
@@ -95,7 +95,7 @@ public class AboutScene extends PixelScene {
 		BitmapTextMultiline title = createMultiline( "Pixel Dungeon", 8 );
 		title.maxWidth = Math.min( Camera.main.width, 120 );
 		title.measure();
-		title.hardlight(Window.TITLE_COLOR);
+		title.hardlight(0xFFFF44);
 		add(title);
 
 		title.x = align((Camera.main.width - title.width()) / 2);
@@ -104,7 +104,7 @@ public class AboutScene extends PixelScene {
 		BitmapTextMultiline link = createMultiline( LNK, 8 );
 		link.maxWidth = Math.min( Camera.main.width, 120 );
 		link.measure();
-		link.hardlight( Window.TITLE_COLOR );
+		link.hardlight(0xFFFF44);
 		add( link );
 		
 		link.x = text.x;
