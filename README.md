@@ -1,9 +1,10 @@
 Pixel Dungeon: Legends
 =============
-`
+
 Google Play
+
 https://play.google.com/store/apps/details?id=com.voicecrystal.pixeldungeon
-`
+
 
 
 "Pixel Dungeon: Legends" is a roguelike game based on "Pixel Dungeon 1.7.5a". Really appreciate that Watabou open sourced all the materials. Please, make sure to try out the original version.
