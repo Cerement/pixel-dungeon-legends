@@ -1,11 +1,8 @@
 Pixel Dungeon: Legends
 =============
 
-Google Play
-
+#### Google Play
 https://play.google.com/store/apps/details?id=com.voicecrystal.pixeldungeon
-
-
 
 "Pixel Dungeon: Legends" is a roguelike game based on "Pixel Dungeon 1.7.5a". Really appreciate that Watabou open sourced all the materials. Please, make sure to try out the original version.
 
@@ -16,11 +13,6 @@ https://play.google.com/store/apps/details?id=com.watabou.pixeldungeon
 Pixel Dungeon Official Site
 
 http://pixeldungeon.watabou.ru/
-
-Also, here is the source code of this version:
-
-https://github.com/Cerement/pixel-dungeon-legends
-
 
 "Roguelike is a sub-genre of role-playing video games, characterized by random level generation, tile-based graphics and permanent death." - Wikipedia
 
