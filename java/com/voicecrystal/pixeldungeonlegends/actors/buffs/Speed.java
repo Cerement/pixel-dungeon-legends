@@ -25,6 +25,11 @@ public class Speed extends FlavourBuff {
 
     @Override
     public int icon() {
-        return BuffIndicator.LEVITATION;
+        return BuffIndicator.SPEED;
+    }
+
+    @Override
+    public String toString() {
+        return "Speed Up";
     }
 }

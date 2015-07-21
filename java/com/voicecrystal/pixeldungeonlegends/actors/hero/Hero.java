@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+import com.voicecrystal.pixeldungeonlegends.plants.Dreamweed;
+import com.voicecrystal.pixeldungeonlegends.plants.Firebloom;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
@@ -164,8 +166,8 @@ public class Hero extends Char {
 	public int lvl = 1;
 	public int exp = 0;
 
-    // focus: next attack will be more powerful
-    public float focusFactor = 0;
+    // overwheling power: next attack will be more powerful
+    public float overwhelmFactor = 0;
 	
 	private ArrayList<Mob> visibleEnemies;
 	
@@ -190,21 +192,24 @@ public class Hero extends Char {
 	private static final String STRENGTH	= "STR";
 	private static final String LEVEL		= "lvl";
 	private static final String EXPERIENCE	= "exp";
+	private static final String OVERWHELM = "overwhelmFactor";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		
-		heroClass.storeInBundle( bundle );
+		heroClass.storeInBundle(bundle);
 		subClass.storeInBundle( bundle );
 		
-		bundle.put( ATTACK, attackSkill );
+		bundle.put(ATTACK, attackSkill);
 		bundle.put( DEFENSE, defenseSkill );
 		
 		bundle.put( STRENGTH, STR );
 		
 		bundle.put( LEVEL, lvl );
 		bundle.put( EXPERIENCE, exp );
+
+		bundle.put(OVERWHELM, overwhelmFactor);
 		
 		belongings.storeInBundle( bundle );
 	}
@@ -216,7 +221,7 @@ public class Hero extends Char {
 		heroClass = HeroClass.restoreInBundle( bundle );
 		subClass = HeroSubClass.restoreInBundle( bundle );
 		
-		attackSkill = bundle.getInt( ATTACK );
+		attackSkill = bundle.getInt(ATTACK);
 		defenseSkill = bundle.getInt( DEFENSE );
 		
 		STR = bundle.getInt( STRENGTH );
@@ -224,7 +229,9 @@ public class Hero extends Char {
 		
 		lvl = bundle.getInt( LEVEL );
 		exp = bundle.getInt( EXPERIENCE );
-		
+
+		overwhelmFactor = bundle.getFloat(OVERWHELM);
+
 		belongings.restoreFromBundle( bundle );
 	}
 	
@@ -807,12 +814,12 @@ public class Hero extends Char {
 	public int attackProc( Char enemy, int damage ) {
 		KindOfWeapon wep = rangedWeapon != null ? rangedWeapon : belongings.weapon;
 
-        // focus
-        if(focusFactor > 0)
+        // overwhelming power (firebloom)
+        if(overwhelmFactor > 0)
         {
-            GLog.p("%dx Damage!", (int)focusFactor);
-            damage *= focusFactor;
-            setFocus(0f); // off
+            GLog.p("%dx Damage!", (int)overwhelmFactor);
+            damage *= overwhelmFactor;
+			setOverwhelmFactor(0f); // off
         }
 
 		if (wep != null) {
@@ -887,9 +894,9 @@ public class Hero extends Char {
 	}
 
     // the next attack will be more powerful
-    public void setFocus(float factor)
+    public void setOverwhelmFactor(float factor)
     {
-        focusFactor = factor;
+		overwhelmFactor = factor;
     }
 	
 	private void checkVisibleMobs() {
@@ -1167,6 +1174,9 @@ public class Hero extends Char {
 		
 		Actor.fixTime();
 		super.die( cause );
+
+		// avoid resume button
+		lastAction = null;
 		
 		Ankh ankh = (Ankh)belongings.getItem( Ankh.class );
 		if (ankh == null) {

@@ -81,11 +81,11 @@ public class Firebloom extends Plant {
                 super.execute(hero, action);
 
                 GLog.p("An overwhelming power charged on your arms.");
-                hero.focusFactor += 2f;
+                hero.overwhelmFactor += 2f;
                 hero.sprite.centerEmitter().burst( EnergyParticle.FACTORY, 15 );
 
                 GLog.n("Something is burning inside. You feel painful.");
-                hero.damage((int)(hero.HT * 0.2), this);
+                hero.damage((int)(hero.HT * 0.25), this);
             }
 
             else

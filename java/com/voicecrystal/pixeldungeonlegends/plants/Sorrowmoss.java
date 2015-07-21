@@ -79,7 +79,7 @@ public class Sorrowmoss extends Plant {
 
                 super.execute(hero, action);
 
-                GLog.n("Now you can take a peek at the monsters' mind...");
+                GLog.p("Now you can take a peek at the monsters' mind...");
                 Buff.prolong(hero, MindVision.class, 5f);
 
                 GLog.w("So much feelings...");
